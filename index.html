@@ -27,26 +27,6 @@
             font-family: sans-serif;
         }
 
-        /*.pin-login__text {*/
-        /*    margin: 10px 0px 10px 10px;*/
-        /*    !*padding: 10px;*!*/
-        /*    height: 60px;*/
-        /*    display: block;*/
-        /*    width: 275px;*/
-        /*    font-size: 1em;*/
-        /*    text-align: center;*/
-        /*    letter-spacing: 0.2em;*/
-        /*    !*box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0,0,0,0.6);*!*/
-        /*    background: white;*/
-        /*    color: #49a5b7;*/
-        /*    !*border: black;*!*/
-        /*    border-color: white;*/
-        /*    border-radius: 10px;*/
-        /*    !*outline: none;*!*/
-        /*    !*outline-color: white;*!*/
-        /*    !*cursor: default;*!*/
-        /*}*/
-
         .pin-login__text {
             margin: 10px 0px 10px 10px;
             padding: 10px;
@@ -117,6 +97,74 @@
             margin-top: -5px;
         }
 
+        .root {
+            display: block;
+            unicode-bidi: isolate;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            display: flex;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        b {
+            flex: 1 1 auto;
+            color: black;
+        }
+
+        .nav3 {
+            flex: 0 0 auto;
+            height: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .a1 {
+            color: black;
+            align-items: center;
+            display: flex;
+            margin-right: 1rem;
+            min-width: 0;
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav2 {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nav1 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .pinText {
+            width: 280px;
+            margin-left: 80px;
+        }
+
+        .pin1 {
+            min-width: 50%;
+            overflow: hidden;
+            padding: 2.5rem;
+            display: block;
+        }
+
+        .pinMain {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -126,24 +174,24 @@
 <!--<button onclick="myFunction()">Try it</button>-->
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<div style="display: block;unicode-bidi: isolate">
-    <nav style="position: sticky; top: 0; display: flex; padding: 0.5rem 1rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1); background-color: #fff;">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%;">
-            <div style="align-items: center; display: flex; flex: 1; min-width: 0;">
-                <a style="color:black; align-items: center; display: flex; margin-right: 1rem; min-width: 0; color: -webkit-link; cursor: pointer; text-decoration: none;"
+<div class="root">
+    <nav>
+        <div class="nav1">
+            <div class="nav2">
+                <a class="a1"
                    href="/">
-                    <div style="flex: 0 0 auto; height: 2rem; margin-right: 0.5rem;">
+                    <div class="nav3">
                         <img src="public/logo-v.png" alt="Logo" style="height: 100%;">
                     </div>
-                    <b style="flex: 1 1 auto; color: black">Vitessce Link</b>
+                    <b>Vitessce Link</b>
                 </a>
             </div>
         </div>
     </nav>
 
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div style="min-width: 50%; overflow: hidden; padding: 2.5rem; display: block">
-            <div style="width: 280px;margin-left: 80px">
+    <div class="pinMain">
+        <div class="pin1">
+            <div class="pinText">
                 Enter your LINK ID and press &#x2713;
             </div>
             <div class="pin-login" id="mainPinLogin">
