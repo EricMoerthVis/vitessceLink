@@ -2,23 +2,24 @@
 <html>
 <head>
     <style>
-        body{
-            background: gray;
-            font-family: Inter,sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+        body {
+            background: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0px;
         }
 
-        h1{
+        h1 {
             margin: 20px;
         }
 
         .pin-login {
             display: inline-block;
-            /*border-radius: 10px;*/
             padding: 10px;
             padding-left: 55px;
             font-size: 35px;
-            /*background: #d9deff;*/
-            /*border: 1px solid #363b5e;*/
+
             user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
@@ -26,21 +27,39 @@
             font-family: sans-serif;
         }
 
+        /*.pin-login__text {*/
+        /*    margin: 10px 0px 10px 10px;*/
+        /*    !*padding: 10px;*!*/
+        /*    height: 60px;*/
+        /*    display: block;*/
+        /*    width: 275px;*/
+        /*    font-size: 1em;*/
+        /*    text-align: center;*/
+        /*    letter-spacing: 0.2em;*/
+        /*    !*box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0,0,0,0.6);*!*/
+        /*    background: white;*/
+        /*    color: #49a5b7;*/
+        /*    !*border: black;*!*/
+        /*    border-color: white;*/
+        /*    border-radius: 10px;*/
+        /*    !*outline: none;*!*/
+        /*    !*outline-color: white;*!*/
+        /*    !*cursor: default;*!*/
+        /*}*/
+
         .pin-login__text {
             margin: 10px 0px 10px 10px;
-            /*padding: 10px;*/
-            height: 60px;
-            display: block;
-            width: 275px;
-            font-size: 1em;
+            padding: 10px;
+            width: 280px;
             text-align: center;
-            letter-spacing: 0.2em;
-            background: black;
-            color: white;
-            border: none;
+            height: 60px;
+            font-size: 1em;
+            border: 0;
+            color: #49a5b7;
+            box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0, 0, 0, .06);
+            outline: none;
+            box-sizing: border-box;
             border-radius: 10px;
-            /*outline: none;*/
-            /*cursor: default;*/
         }
 
         .pin-login__text--error {
@@ -73,7 +92,7 @@
             width: 80px;
             height: 80px;
             margin: 10px;
-            background: black;
+            background: #49a5b7;
             color: white;
             border-radius: 15%;
             display: inline-flex;
@@ -87,14 +106,14 @@
             background: rgba(0, 0, 0, 0.25);
         }
 
-        .custom{
+        .custom {
             margin-top: 28px;
             margin-left: 28px;
             width: 100%;
             height: 100%;
         }
 
-        .zero{
+        .zero {
             margin-top: -5px;
         }
 
@@ -107,101 +126,165 @@
 <!--<button onclick="myFunction()">Try it</button>-->
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<h1> Vitessce MR Connection Page </h1>
-<div style="margin: 20px; font-size: 19px">
-    Dial your connection code and press the checkmark
-</div>
-<div class="pin-login" id="mainPinLogin">
-    <input type="text" readonly class="pin-login__text">
-    <div class="pin-login__numpad">
+<div style="display: block;unicode-bidi: isolate">
+    <nav style="position: sticky; top: 0; display: flex; padding: 0.5rem 1rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1); background-color: #fff;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%;">
+            <div style="align-items: center; display: flex; flex: 1; min-width: 0;">
+                <a style="color:black; align-items: center; display: flex; margin-right: 1rem; min-width: 0; color: -webkit-link; cursor: pointer; text-decoration: none;"
+                   href="/">
+                    <div style="flex: 0 0 auto; height: 2rem; margin-right: 0.5rem;">
+                        <img src="public/logo-v.png" alt="Logo" style="height: 100%;">
+                    </div>
+                    <b style="flex: 1 1 auto; color: black">Vitessce Link</b>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="min-width: 50%; overflow: hidden; padding: 2.5rem; display: block">
+            <div style="width: 280px;margin-left: 80px">
+                Enter your LINK ID and press &#x2713;
+            </div>
+            <div class="pin-login" id="mainPinLogin">
+                <input type="text" readonly class="pin-login__text">
+                <div class="pin-login__numpad">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    class PinLogin {
-        constructor ({el, loginEndpoint, redirectTo, maxNumbers = Infinity}) {
-            this.el = {
-                main: el,
-                numPad: el.querySelector(".pin-login__numpad"),
-                textDisplay: el.querySelector(".pin-login__text")
-            };
+  class PinLogin {
+    constructor({el, loginEndpoint, redirectTo, maxNumbers = Infinity}) {
+      this.el = {
+        main: el,
+        numPad: el.querySelector(".pin-login__numpad"),
+        textDisplay: el.querySelector(".pin-login__text")
+      };
 
-            this.loginEndpoint = loginEndpoint;
-            this.redirectTo = redirectTo;
-            this.maxNumbers = maxNumbers;
-            this.value = "";
+      this.loginEndpoint = loginEndpoint;
+      this.redirectTo = redirectTo;
+      this.maxNumbers = maxNumbers;
+      this.value = "";
 
-            this._generatePad();
-        }
-
-        _generatePad() {
-            const padLayout = [
-                "1", "2", "3",
-                "4", "5", "6",
-                "7", "8", "9",
-                "backspace", "0", "done"
-            ];
-
-            padLayout.forEach(key => {
-                const insertBreak = key.search(/[369]/) !== -1;
-                const keyEl = document.createElement("div");
-
-                keyEl.classList.add("pin-login__key");
-                keyEl.classList.toggle("material-icons", isNaN(key));
-                keyEl.innerHTML = isNaN(key) ? "<div class='custom'>" + key + "</div>" : key === "0" ? "<div class='zero'>" + key + "</div>" : key;
-                keyEl.addEventListener("click", () => { this._handleKeyPress(key) });
-                this.el.numPad.appendChild(keyEl);
-
-                if (insertBreak) {
-                    this.el.numPad.appendChild(document.createElement("br"));
-                }
-            });
-        }
-
-        _handleKeyPress(key) {
-            switch (key) {
-                case "backspace":
-                    this.value = this.value.substring(0, this.value.length - 1);
-                    this._updateValueText();
-                    break;
-                case "done":
-                    this._attemptLogin();
-                    break;
-                default:
-                    if (this.value.length < this.maxNumbers && !isNaN(key)) {
-                        this.value += key;
-                    }
-                    this._updateValueText();
-                    break;
-            }
-
-
-        }
-
-        _updateValueText() {
-            // this.el.textDisplay.value = "_".repeat(this.value.length);
-            console.log("There")
-            this.el.textDisplay.value = this.value;
-            this.el.textDisplay.classList.remove("pin-login__text--error");
-        }
-
-        _attemptLogin() {
-            if (this.value.length === 4) {
-                console.log()
-                window.open(`https://beta-mr.vitessce.io/?dataset=123&ws=true&code=${this.value}&send=true`, "_self");
-                //window.open(`https://ericmoerth.at/vitessceXR/?dataset=123&ws=true&code=${this.value}&send=true`, "_self");
-            }else{
-                console.log("Here")
-                this.el.textDisplay.classList.add("pin-login__text--error");
-            }
-        }
+      this._generatePad();
     }
 
-    new PinLogin({
-        el: document.getElementById("mainPinLogin"),
-        loginEndpoint: "login.php",
-        redirectTo: "dashboard.html"
-    });
+    _generatePad() {
+      const padLayout = [
+        "1", "2", "3",
+        "4", "5", "6",
+        "7", "8", "9",
+        "backspace", "0", "done"
+      ];
+
+      padLayout.forEach(key => {
+        const insertBreak = key.search(/[369]/) !== -1;
+        const keyEl = document.createElement("div");
+
+        keyEl.classList.add("pin-login__key");
+        keyEl.classList.toggle("material-icons", isNaN(key));
+        keyEl.innerHTML = isNaN(key) ? "<div class='custom'>" + key + "</div>" : key === "0" ? "<div class='zero'>" + key + "</div>" : key;
+        keyEl.addEventListener("click", () => {
+          this._handleKeyPress(key)
+        });
+        this.el.numPad.appendChild(keyEl);
+
+        if (insertBreak) {
+          this.el.numPad.appendChild(document.createElement("br"));
+        }
+      });
+    }
+
+    _handleKeyPress(key) {
+      switch (key) {
+        case "backspace":
+          this.value = this.value.substring(0, this.value.length - 1);
+          this._updateValueText();
+          break;
+        case "done":
+          this._attemptLogin();
+          break;
+        default:
+          if (this.value.length < this.maxNumbers && !isNaN(key)) {
+            this.value += key;
+          }
+          this._updateValueText();
+          break;
+      }
+
+
+    }
+
+    _updateValueText() {
+      // this.el.textDisplay.value = "_".repeat(this.value.length);
+      this.el.textDisplay.value = this.value;
+      this.el.textDisplay.classList.remove("pin-login__text--error");
+    }
+
+    _attemptLogin() {
+      if (this.value.length === 4) {
+        exampleConfig.layout[0].props.linkID = parseInt(this.value)
+        let conf  = JSON.stringify(exampleConfig, null, 2)
+        const nextUrl = `data:,${encodeURIComponent(conf)}`;
+        // window.open(`https://beta-mr.vitessce.io/?dataset=123&ws=true&code=${this.value}&send=true`, "_self");
+        //window.open(`https://ericmoerth.at/vitessceXR/?dataset=123&ws=true&code=${this.value}&send=true`, "_self");
+        window.location.href = `http://localhost:3000/?url=${nextUrl}`
+      } else {
+        this.el.textDisplay.classList.add("pin-login__text--error");
+      }
+    }
+  }
+
+  new PinLogin({
+    el: document.getElementById("mainPinLogin"),
+    loginEndpoint: "login.php",
+    redirectTo: "dashboard.html"
+  });
+
+  const exampleConfig = {
+    version: "1.0.16",
+    name: "Link controller demo",
+    datasets: [
+      {
+        uid: "A",
+        name: "My dataset",
+        files: [
+          {
+            fileType: "image.ome-tiff",
+            url: "https://data-2.vitessce.io/data/redBloodCell.ome.tiff",
+            coordinationValues: {
+              fileUid: "file"
+            }
+          }
+        ]
+      }
+    ],
+    coordinationSpace: {
+      dataset: {
+        A: "A"
+      }
+    },
+    layout: [
+      {
+        component: "linkController",
+        props: {
+          linkID: 1234
+        },
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 8,
+        coordinationScopes: {
+          dataset: "A"
+        }
+      }
+    ],
+    initStrategy: "auto"
+  };
+
 </script>
 
 </body>
